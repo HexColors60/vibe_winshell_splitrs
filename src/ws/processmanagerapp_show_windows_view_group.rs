@@ -10,7 +10,7 @@ use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
 
 impl ProcessManagerApp {
-    fn show_windows_view(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn show_windows_view(&mut self, ui: &mut egui::Ui) {
         let filter_lower = self.search_filter.to_lowercase();
         let mut window_to_focus: Option<u64> = None;
         let mut program_to_add: Option<(String, String)> = None;

@@ -9,7 +9,7 @@ use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
 
 impl ProcessManagerApp {
-    fn show_font_picker(&mut self, ctx: &egui::Context) {
+    pub(crate) fn show_font_picker(&mut self, ctx: &egui::Context) {
         let mut open = self.font_picker.is_open;
         egui::Window::new("🔤 Select Font")
             .open(&mut open)

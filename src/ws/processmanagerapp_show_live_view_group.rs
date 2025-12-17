@@ -11,7 +11,7 @@ use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
 
 impl ProcessManagerApp {
-    fn show_live_view(&mut self, ctx: &egui::Context, ui: &mut egui::Ui) {
+    pub(crate) fn show_live_view(&mut self, ctx: &egui::Context, ui: &mut egui::Ui) {
         let filter_lower = self.search_filter.to_lowercase();
         let mut window_to_focus: Option<u64> = None;
         let filtered_windows: Vec<WindowInfo> = self

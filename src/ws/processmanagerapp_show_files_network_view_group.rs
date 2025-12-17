@@ -10,7 +10,7 @@ use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
 
 impl ProcessManagerApp {
-    fn show_files_network_view(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn show_files_network_view(&mut self, ui: &mut egui::Ui) {
         let filter_lower = self.search_filter.to_lowercase();
         let filtered_processes: Vec<(u32, String, u64, f32, Option<String>)> = self
             .processes

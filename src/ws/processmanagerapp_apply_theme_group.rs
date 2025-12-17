@@ -9,7 +9,7 @@ use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
 
 impl ProcessManagerApp {
-    fn apply_theme(&self, ctx: &egui::Context) {
+    pub(crate) fn apply_theme(&self, ctx: &egui::Context) {
         let visuals = match self.theme {
             Theme::Dark => egui::Visuals::dark(),
             Theme::Light => egui::Visuals::light(),

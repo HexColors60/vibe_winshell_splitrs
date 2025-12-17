@@ -8,7 +8,7 @@ use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
 
 impl ProcessManagerApp {
-    fn show_kill_confirm_dialog(&mut self, ctx: &egui::Context) {
+    pub(crate) fn show_kill_confirm_dialog(&mut self, ctx: &egui::Context) {
         if let Some(pid) = self.kill_confirm_pid {
             let mut open = true;
             egui::Window::new("⚠️ Confirm Kill Process")

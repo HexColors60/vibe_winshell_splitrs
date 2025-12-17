@@ -10,7 +10,7 @@ use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
 
 impl ProcessManagerApp {
-    fn show_file_list(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn show_file_list(&mut self, ui: &mut egui::Ui) {
         egui::ScrollArea::both()
             .auto_shrink([false, false])
             .show(

@@ -10,7 +10,7 @@ use super::processmanagerapp_type::ProcessManagerApp;
 
 use std::io::Write;
 impl ProcessManagerApp {
-    fn export_files_to_csv(&self) -> Result<String, String> {
+    pub(crate) fn export_files_to_csv(&self) -> Result<String, String> {
         let filename = format!(
             "file_handles_{}.csv", chrono::Local::now().format("%Y%m%d_%H%M%S")
         );

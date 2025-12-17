@@ -14,7 +14,7 @@ use super::processmanagerapp_type::ProcessManagerApp;
 use crate::ws::types::FileInfo;
 
 impl ProcessManagerApp {
-    fn show_filepane_view(&mut self, ui: &mut egui::Ui) {
+    pub(crate) fn show_filepane_view(&mut self, ui: &mut egui::Ui) {
         if self.filepane_tabs.is_empty() {
             self.filepane_tabs
                 .push(
