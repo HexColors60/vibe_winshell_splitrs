@@ -1,3 +1,4 @@
+use crate::egui::Theme;
 //! # ProcessManagerApp - apply_theme_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

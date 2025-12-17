@@ -1,3 +1,5 @@
+use crate::ws::FileHandle;
+use crate::ws::NetworkConnection;
 //! # ProcessManagerApp - show_files_network_view_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

@@ -1,3 +1,6 @@
+use crate::ws::WindowInfo;
+use std::time::Instant;
+use std::time::Duration;
 //! # ProcessManagerApp - show_live_view_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

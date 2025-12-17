@@ -1,3 +1,5 @@
+use crate::ws::SortColumn;
+use crate::ws::ViewMode;
 //! # ProcessManagerApp - show_file_list_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

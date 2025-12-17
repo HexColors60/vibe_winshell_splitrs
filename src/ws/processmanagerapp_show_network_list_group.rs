@@ -1,3 +1,4 @@
+use crate::ws::ViewMode;
 //! # ProcessManagerApp - show_network_list_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

@@ -1,3 +1,4 @@
+use crate::ws::FileInfo;
 //! # ProcessManagerApp - save_all_tabs_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

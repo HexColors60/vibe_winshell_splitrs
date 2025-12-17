@@ -1,3 +1,4 @@
+use crate::ws::FilepaneCommand;
 //! # ProcessManagerApp - redo_last_action_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

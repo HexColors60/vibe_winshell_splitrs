@@ -2969,6 +2969,7 @@ version = "0.1.0"
 dependencies = [
  "dirs",
  "eframe",
+ "egui",
  "windows 0.62.2",
 ]
 

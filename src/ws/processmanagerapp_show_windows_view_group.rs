@@ -1,3 +1,5 @@
+use crate::ws::WindowInfo;
+use crate::ws::ViewMode;
 //! # ProcessManagerApp - show_windows_view_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

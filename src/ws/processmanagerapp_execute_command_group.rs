@@ -1,3 +1,4 @@
+use crate::ws::FilepaneCommand;
 //! # ProcessManagerApp - execute_command_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

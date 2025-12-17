@@ -1,3 +1,4 @@
+use std::fs::File;
 //! # ProcessManagerApp - export_processes_to_csv_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.

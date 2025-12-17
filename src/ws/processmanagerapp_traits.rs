@@ -1,3 +1,7 @@
+use crate::ws::ProcessManagerApp;
+use crate::ws::ViewMode;
+use crate::egui::Theme;
+use std::time::Duration;
 //! # ProcessManagerApp - Trait Implementations
 //!
 //! This module contains trait implementations for `ProcessManagerApp`.

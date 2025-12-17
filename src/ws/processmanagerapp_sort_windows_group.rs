@@ -1,3 +1,4 @@
+use crate::ws::SortColumn;
 //! # ProcessManagerApp - sort_windows_group Methods
 //!
 //! This module contains method implementations for `ProcessManagerApp`.
