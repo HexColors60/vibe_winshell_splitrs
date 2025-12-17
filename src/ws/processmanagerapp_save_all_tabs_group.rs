@@ -1,9 +1,9 @@
 use crate::ws::FileInfo;
-//! # ProcessManagerApp - save_all_tabs_group Methods
-//!
-//! This module contains method implementations for `ProcessManagerApp`.
-//!
-//! 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
+// # ProcessManagerApp - save_all_tabs_group Methods
+//
+// This module contains method implementations for `ProcessManagerApp`.
+//
+// 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
 
 use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;

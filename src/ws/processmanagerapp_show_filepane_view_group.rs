@@ -3,11 +3,11 @@ use crate::ws::ContextAction;
 use crate::ws::ChecksumAlgorithm;
 use crate::egui::Theme;
 use crate::ws::FilepaneCommand;
-//! # ProcessManagerApp - show_filepane_view_group Methods
-//!
-//! This module contains method implementations for `ProcessManagerApp`.
-//!
-//! 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
+// # ProcessManagerApp - show_filepane_view_group Methods
+//
+// This module contains method implementations for `ProcessManagerApp`.
+//
+// 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
 
 use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;

@@ -1,9 +1,9 @@
 use crate::ws::SortColumn;
-//! # ProcessManagerApp - sort_files_group Methods
-//!
-//! This module contains method implementations for `ProcessManagerApp`.
-//!
-//! 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
+// # ProcessManagerApp - sort_files_group Methods
+//
+// This module contains method implementations for `ProcessManagerApp`.
+//
+// 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
 
 use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;

@@ -13,9 +13,9 @@ use crate::ws::FontPickerState;
 use crate::ws::FilepaneTab;
 use crate::ws::FileInfo;
 use crate::ws::FilepaneCommand;
-//! Auto-generated module
-//!
-//! 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
+// Auto-generated module
+//
+// 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
 
 use std::collections::{HashSet, HashMap};
 

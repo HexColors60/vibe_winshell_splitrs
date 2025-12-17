@@ -1,11 +1,11 @@
 use crate::ws::WindowInfo;
 use std::time::Instant;
 use std::time::Duration;
-//! # ProcessManagerApp - show_live_view_group Methods
-//!
-//! This module contains method implementations for `ProcessManagerApp`.
-//!
-//! 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
+// # ProcessManagerApp - show_live_view_group Methods
+//
+// This module contains method implementations for `ProcessManagerApp`.
+//
+// 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
 
 use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;

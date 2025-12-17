@@ -3,11 +3,11 @@ use crate::ws::WindowInfo;
 use crate::ws::ProcessInfo;
 use crate::ws::FileHandle;
 use crate::ws::NetworkConnection;
-//! # ProcessManagerApp - refresh_all_data_group Methods
-//!
-//! This module contains method implementations for `ProcessManagerApp`.
-//!
-//! 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
+// # ProcessManagerApp - refresh_all_data_group Methods
+//
+// This module contains method implementations for `ProcessManagerApp`.
+//
+// 🤖 Generated with [SplitRS](https://github.com/cool-japan/splitrs)
 
 use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
