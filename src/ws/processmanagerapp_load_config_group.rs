@@ -8,7 +8,7 @@ use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
 
 impl ProcessManagerApp {
-    fn load_config() -> AppConfig {
+    pub fn load_config() -> AppConfig {
         let config_path = Self::get_config_path();
         let mut config = AppConfig {
             programs: Vec::new(),

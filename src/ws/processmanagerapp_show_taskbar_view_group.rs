@@ -198,7 +198,7 @@ impl ProcessManagerApp {
             self.view_mode = ViewMode::New;
         }
     }
-    fn get_process_icon(process_name: &str) -> &'static str {
+    pub fn get_process_icon(process_name: &str) -> &'static str {
         let name_lower = process_name.to_lowercase();
         if name_lower.contains("chrome") {
             return "🌐";

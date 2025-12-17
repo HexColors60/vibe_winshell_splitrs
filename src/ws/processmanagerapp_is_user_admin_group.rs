@@ -8,7 +8,7 @@ use std::collections::{HashMap, HashSet};
 use super::processmanagerapp_type::ProcessManagerApp;
 
 impl ProcessManagerApp {
-    fn is_user_admin() -> bool {
+    pub fn is_user_admin() -> bool {
         #[cfg(windows)]
         {
             use windows::Win32::UI::Shell::IsUserAnAdmin;
