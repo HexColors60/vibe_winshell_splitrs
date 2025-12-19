@@ -1101,29 +1101,173 @@ impl ProcessManagerApp {
         dest_path: &str,
         speed_limit_mb_per_sec: f64,
     ) {
+        self.add_log(format!("📋 Starting batch copy operation for {} files", source_files.len()));
+        self.add_log(format!("📍 Destination: {}", dest_path));
+        self.add_log(format!("⚡ Speed limit: {} MB/s", speed_limit_mb_per_sec));
+
+        let mut successful_copies = 0;
+        let mut failed_copies = 0;
         let mut total_bytes_copied = 0u64;
         let batch_size = (speed_limit_mb_per_sec * 1024.0 * 1024.0) as u64;
+
         for (index, file_path) in source_files.iter().enumerate() {
+            // Check if source exists
+            if !std::path::Path::new(file_path).exists() {
+                self.add_log(format!("❌ Source does not exist: {}", file_path));
+                failed_copies += 1;
+                continue;
+            }
+
+            // Get file info
+            let file_metadata = match std::fs::metadata(file_path) {
+                Ok(metadata) => metadata,
+                Err(e) => {
+                    self.add_log(format!("❌ Failed to get metadata for {}: {}", file_path, e));
+                    failed_copies += 1;
+                    continue;
+                }
+            };
+
+            let is_directory = file_metadata.is_dir();
+            let file_size = if is_directory { 0 } else { file_metadata.len() };
+
             let dest_file = format!(
                 "{}\\{}", dest_path, std::path::Path::new(file_path).file_name()
                 .and_then(| name | name.to_str()).unwrap_or("unknown")
             );
-            self.add_log(
-                format!(
-                    "Copying {}/{}: {} -> {}", index + 1, source_files.len(), file_path,
-                    dest_file
-                ),
-            );
+
+            // Ensure destination directory exists
+            let dest_dir = std::path::Path::new(&dest_file).parent().unwrap_or_else(|| std::path::Path::new(dest_path));
+            if let Err(e) = std::fs::create_dir_all(dest_dir) {
+                self.add_log(format!("❌ Failed to create destination directory {}: {}", dest_dir.display(), e));
+                failed_copies += 1;
+                continue;
+            }
+
+            // Perform the actual copy operation
+            let copy_result = if is_directory {
+                self.copy_directory_recursive(file_path, &dest_file)
+            } else {
+                self.copy_file_with_progress(file_path, &dest_file, file_size)
+            };
+
+            match copy_result {
+                Ok(bytes_copied) => {
+                    successful_copies += 1;
+                    total_bytes_copied += bytes_copied;
+                    self.add_log(
+                        format!(
+                            "✅ Copied {}/{}: {} -> {} ({} bytes)",
+                            index + 1, source_files.len(),
+                            std::path::Path::new(file_path).file_name()
+                                .and_then(|n| n.to_str()).unwrap_or("unknown"),
+                            std::path::Path::new(&dest_file).file_name()
+                                .and_then(|n| n.to_str()).unwrap_or("unknown"),
+                            bytes_copied
+                        ),
+                    );
+                }
+                Err(e) => {
+                    failed_copies += 1;
+                    self.add_log(format!("❌ Failed to copy {}: {}", file_path, e));
+                }
+            }
+
             if index > 0 && index % 5 == 0 {
                 self.add_log(
-                    format!("Speed limiting at {} MB/s", speed_limit_mb_per_sec),
+                    format!("⏸️ Speed limiting at {} MB/s (processed: {}/{})",
+                        speed_limit_mb_per_sec, successful_copies, source_files.len()),
                 );
             }
         }
-        self.add_log(
-            format!("Copy operation completed. Total files: {}", source_files.len()),
-        );
+
+        // Summary
+        self.add_log(format!("📊 Copy operation completed:"));
+        self.add_log(format!("   ✅ Successful: {} files", successful_copies));
+        self.add_log(format!("   ❌ Failed: {} files", failed_copies));
+        self.add_log(format!("   📦 Total bytes: {}", self.format_bytes(total_bytes_copied)));
+
+        if failed_copies > 0 {
+            self.add_log(format!("⚠️ Some files failed to copy. Check the logs above for details."));
+        }
     }
+
+    fn copy_file_with_progress(&self, source: &str, destination: &str, file_size: u64) -> std::io::Result<u64> {
+        use std::io::{Read, Write, BufReader, BufWriter};
+
+        let mut total_copied = 0u64;
+        let chunk_size = 64 * 1024; // 64KB chunks
+
+        let source_file = std::fs::File::open(source)?;
+        let dest_file = std::fs::File::create(destination)?;
+
+        let mut reader = BufReader::new(source_file);
+        let mut writer = BufWriter::new(dest_file);
+        let mut buffer = vec![0u8; chunk_size];
+
+        loop {
+            let bytes_read = reader.read(&mut buffer)?;
+            if bytes_read == 0 {
+                break;
+            }
+
+            writer.write_all(&buffer[..bytes_read])?;
+            total_copied += bytes_read as u64;
+        }
+
+        writer.flush()?;
+        Ok(total_copied)
+    }
+
+    fn copy_directory_recursive(&self, source: &str, destination: &str) -> std::io::Result<u64> {
+        let mut total_copied = 0u64;
+
+        // Create destination directory
+        std::fs::create_dir_all(destination)?;
+
+        // Read source directory
+        for entry in std::fs::read_dir(source)? {
+            let entry = entry?;
+            let path = entry.path();
+            let name = path.file_name().unwrap_or_default();
+            let dest_path = std::path::Path::new(destination).join(name);
+
+            if path.is_dir() {
+                // Recursively copy subdirectory
+                total_copied += self.copy_directory_recursive(path.to_str().unwrap(), dest_path.to_str().unwrap())?;
+            } else {
+                // Copy file
+                let metadata = std::fs::metadata(&path)?;
+                let file_size = metadata.len();
+                match self.copy_file_with_progress(path.to_str().unwrap(), dest_path.to_str().unwrap(), file_size) {
+                    Ok(copied) => total_copied += copied,
+                    Err(e) => {
+                        self.add_log(format!("❌ Failed to copy file {}: {}", path.display(), e));
+                    }
+                }
+            }
+        }
+
+        Ok(total_copied)
+    }
+
+    fn format_bytes(&self, bytes: u64) -> String {
+        const UNITS: &[&str] = &["B", "KB", "MB", "GB", "TB"];
+        let mut size = bytes as f64;
+        let mut unit_index = 0;
+
+        while size >= 1024.0 && unit_index < UNITS.len() - 1 {
+            size /= 1024.0;
+            unit_index += 1;
+        }
+
+        if unit_index == 0 {
+            format!("{} {}", bytes, UNITS[unit_index])
+        } else {
+            format!("{:.1} {}", size, UNITS[unit_index])
+        }
+    }
+
     fn copy_files_to_opposite_panel(&mut self) {
         if self.filepane_active_tab >= self.filepane_tabs.len() {
             return;
